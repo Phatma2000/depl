@@ -1,0 +1,30 @@
+#mainBox2 {
+  justify-content: center;
+}
+
+.second-card {
+  padding-bottom: 0px !important;
+}
+
+#rightBox {
+  background-color: #fff;
+}
+
+.cards {
+  margin-bottom: 20px !important;
+}
+
+#rightBox {
+  margin-top: 0% !important;
+  border-radius: 15px;
+}
+@media (min-width: 1536px) {
+  .css-1qji5zp-MuiGrid-root {
+    max-width: 70% !important;
+  }
+}
+
+.swiper-wrapper {
+  transform: translateX(0px, 0px, 0px) !important;
+  transform: translate3d(0px 0px 0px) !important;
+}

@@ -14,7 +14,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Form from "./pages/Form.jsx";
 
 import Store from "./components/context/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaArrowPointer,
   FaEnvelope,
@@ -25,16 +25,20 @@ import {
 import Card1 from "./components/Cards/Card1/Card1";
 import Card2 from "./components/Cards/Card2/Card2";
 import Card3 from "./components/Cards/Card3/Card3";
-
+import Alboms from "./components/Alboms/Alboms";
+// import particlesJS from "react-particles-js"
 function App() {
   const [selectedCard, setSelectedCard] = useState(0);
   const [cardData, setCardData] = useState([]);
-  const [fileDataURL, setFileDataURL] = useState(null);
-  const [fontSize, setFontSize] = useState(10);
+  // const [fileDataURL, setFileDataURL] = useState(null);
+  const [fontSize, setFontSize] = useState();
   const [flexDirection, setFlexDirection] = useState(false);
   const [nameStatus, setNameStatus] = useState(false);
-  const [name, setName] = useState("");
-
+  // const [selectCard, setSelectCard] = useState(null);
+  // const [value, setFieldValue] = useState("");
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [printValue, setPrintValue] = useState();
+ const  [chooseCard, setChooseCard] = useState(null);
   const cards = [
     {
       firstCardContent: {
@@ -69,53 +73,51 @@ function App() {
         iconInformation: "icon-information1",
         cardHolderNameBox: "cardHolderNameBox",
         secondCardBlog: "second-card-blog",
+        // cardMiddleClassName: "middle-name1",
+        // cardMiddleName: "Mike",
       },
-      contactList: [
+      addressText: [
         {
           id: 1,
-          className: "down-part-lorem1",
-          text: "123 Dummy, Lorem Ipsum",
-          customStyle: { padding: "5px", fontWeight: "800" },
-        },
-        {
-          id: 2,
-          className: "down-part-number",
-          text: "+00 1234 5XXX 9012",
-          customStyle: { padding: "5px", fontWeight: "800" },
-        },
-        {
-          id: 3,
-          className: "down-part-email",
-          text: "info@email space",
-          customStyle: { padding: "5px", fontWeight: "800" },
-        },
-        {
-          id: 4,
-          className: "down-part-website",
-          text: "www.websiteaddress",
-          customStyle: { padding: "5px", fontWeight: "800" },
-        },
-      ],
-      iconList: [
-        {
-          id: 1,
-          className: "fa-location1",
+          text: cardData.address
+            ? cardData.address
+            : cardData.address == ""
+            ? null
+            : "123 Dummy, Lorem Ipsum",
           icon: <FaLocationDot />,
+          customStyle: { fontWeight: "600" },
         },
         {
           id: 2,
-          className: "fa-phone1",
+          addressClass: "down-part-number",
+          text: cardData.phoneNumber
+            ? cardData.phoneNumber
+            : cardData.phoneNumber == ""
+            ? null
+            : "+00 1234 5XXX 9012",
           icon: <FaPhone />,
+          customStyle: { fontWeight: "600" },
         },
         {
           id: 3,
-          className: "fa-envelope1",
+          text: cardData.email
+            ? cardData?.email
+            : cardData.email == ""
+            ? null
+            : "info@email space",
           icon: <FaEnvelope />,
+          customStyle: { fontWeight: "600" },
         },
         {
           id: 4,
-          className: "fa-arrow-pointer1",
+          addressClass: "down-part-website",
+          text: cardData.website
+            ? cardData.website
+            : cardData.website == ""
+            ? null
+            : "www.websiteaddress",
           icon: <FaArrowPointer />,
+          customStyle: { fontWeight: "600" },
         },
       ],
     },
@@ -123,7 +125,6 @@ function App() {
 
     {
       firstCardContent: {
-        firstCard: "first-card2",
         backGroundImage: `../..${FirstCard2}`,
         companyName: "company-name",
         companyNameText: "Design",
@@ -131,6 +132,7 @@ function App() {
         companyNameSloganText: "Tagline space",
         companyNameLoremText: "down-part-lorem2",
         companyNameLoremTextContent: "Lorem Ipsum Dolor",
+        firstCardBlog: "first-card-blog",
       },
 
       secondCardContent: {
@@ -145,49 +147,46 @@ function App() {
         cardHolderOccupationText: "Co-Founder Brand Name",
         flexClassName: "flex",
         foncticonClassName: "fonticon",
+        secondCardBlog: "second-card-blog",
+        // cardMiddleClassName: "middle-name2",
+        // cardMiddleName: "Mike",
       },
 
       addressText: [
         {
           id: 1,
-          className: "down-part-lorem1",
-          text: "123 Dummy, Lorem Ipsum",
-        },
-        {
-          id: 2,
-          className: "down-part-number",
-          text: "+00 1234 5XXX 9012",
-        },
-        {
-          id: 3,
-          className: "down-part-email",
-          text: "info@email space",
-        },
-        {
-          id: 4,
-          className: "down-part-website",
-          text: "www.websiteaddress",
-        },
-      ],
-      iconList: [
-        {
-          id: 1,
-          className: "fa-location-dot",
+          text: cardData.address
+            ? cardData.address
+            : cardData.address == ""
+            ? null
+            : "123 Dummy, Lorem Ipsum",
           icon: <FaLocationDot />,
         },
         {
           id: 2,
-          className: "fa-phone",
+          text: cardData?.phoneNumber
+            ? cardData?.phoneNumber
+            : cardData.phoneNumber == ""
+            ? null
+            : "+00 1234 5XXX 9012",
           icon: <FaPhone />,
         },
         {
           id: 3,
-          className: "fa-envelope",
+          text: cardData.email
+            ? cardData?.email
+            : cardData.email == ""
+            ? null
+            : "info@email space",
           icon: <FaEnvelope />,
         },
         {
           id: 4,
-          className: "fa-arrow-pointer",
+          text: cardData.website
+            ? cardData.website
+            : cardData.website == ""
+            ? null
+            : "www.websiteaddress",
           icon: <FaArrowPointer />,
         },
       ],
@@ -217,66 +216,191 @@ function App() {
         cardHolderOccupation: "project-manager",
         cardHolderOccupationText: "Project Manager",
         flexClassName: "flex",
+        // cardMiddleClassName: "middle-name3",
+        // cardMiddleName: "Mike",
       },
-
-      addressIcon: [
-        {
-          id: 1,
-          className: "location-dot",
-          icon: <FaLocationDot />,
-        },
-        {
-          id: 2,
-          className: "phone",
-          icon: <FaPhone />,
-        },
-        {
-          id: 3,
-          className: "envelope",
-          icon: <FaEnvelope />,
-        },
-        {
-          id: 4,
-          className: "arrow-pointer",
-          icon: <FaArrowPointer />,
-        },
-      ],
 
       addressText: [
         {
           id: 1,
-          className: "location-text",
-          text: "123 Dummy, Lorem Ipsum",
+          // addressClass: "location-text",
+          text: cardData.address
+            ? cardData.address
+            : cardData.address == ""
+            ? null
+            : "123 Dummy, Lorem Ipsum",
+          // iconClass: "location-dot",
+          icon: <FaLocationDot />,
         },
 
         {
           id: 2,
-          className: "phone-text",
-          text: "+00 1234 5XXX 9012",
+          // addressClass: "phone-text",
+          text: cardData?.phoneNumber
+            ? cardData?.phoneNumber
+            : cardData.phoneNumber == ""
+            ? null
+            : "+00 1234 5XXX 9012",
+          // iconClass: "phone",
+          icon: <FaPhone />,
         },
 
         {
           id: 3,
-          className: "envelope-text",
-          text: "info@email space",
+          // addressClass: "envelope-text",
+          text: cardData.email
+            ? cardData?.email
+            : cardData.email == ""
+            ? null
+            : "info@email space",
+          // iconClass: "envelope",
+          icon: <FaEnvelope />,
         },
         {
           id: 4,
-          className: "arrow-text",
-          text: "www.websiteaddress",
+          // addressClass: "arrow-text",
+          text: cardData.website
+            ? cardData.website
+            : cardData.website == ""
+            ? null
+            : "www.websiteaddress",
+          // iconClass: "arrow-pointer",
+          icon: <FaArrowPointer />,
         },
       ],
     },
   ];
 
+  // console.log(cardData);
+  // particlesJS(
+  //   "particles-js",
+
+  //   {
+  //     particles: {
+  //       number: {
+  //         value: 80,
+  //         density: {
+  //           enable: true,
+  //           value_area: 800,
+  //         },
+  //       },
+  //       color: {
+  //         value: "#ffffff",
+  //       },
+  //       shape: {
+  //         type: "circle",
+  //         stroke: {
+  //           width: 0,
+  //           color: "#000000",
+  //         },
+  //         polygon: {
+  //           nb_sides: 5,
+  //         },
+  //         image: {
+  //           src: "img/github.svg",
+  //           width: 100,
+  //           height: 100,
+  //         },
+  //       },
+  //       opacity: {
+  //         value: 0.5,
+  //         random: false,
+  //         anim: {
+  //           enable: false,
+  //           speed: 1,
+  //           opacity_min: 0.1,
+  //           sync: false,
+  //         },
+  //       },
+  //       size: {
+  //         value: 5,
+  //         random: true,
+  //         anim: {
+  //           enable: false,
+  //           speed: 40,
+  //           size_min: 0.1,
+  //           sync: false,
+  //         },
+  //       },
+  //       line_linked: {
+  //         enable: true,
+  //         distance: 150,
+  //         color: "#ffffff",
+  //         opacity: 0.4,
+  //         width: 1,
+  //       },
+  //       move: {
+  //         enable: true,
+  //         speed: 6,
+  //         direction: "none",
+  //         random: false,
+  //         straight: false,
+  //         out_mode: "out",
+  //         attract: {
+  //           enable: false,
+  //           rotateX: 600,
+  //           rotateY: 1200,
+  //         },
+  //       },
+  //     },
+  //     interactivity: {
+  //       detect_on: "canvas",
+  //       events: {
+  //         onhover: {
+  //           enable: true,
+  //           mode: "repulse",
+  //         },
+  //         onclick: {
+  //           enable: true,
+  //           mode: "push",
+  //         },
+  //         resize: true,
+  //       },
+  //       modes: {
+  //         grab: {
+  //           distance: 400,
+  //           line_linked: {
+  //             opacity: 1,
+  //           },
+  //         },
+  //         bubble: {
+  //           distance: 400,
+  //           size: 40,
+  //           duration: 2,
+  //           opacity: 8,
+  //           speed: 3,
+  //         },
+  //         repulse: {
+  //           distance: 200,
+  //         },
+  //         push: {
+  //           particles_nb: 4,
+  //         },
+  //         remove: {
+  //           particles_nb: 2,
+  //         },
+  //       },
+  //     },
+  //     retina_detect: true,
+  //     config_demo: {
+  //       hide_card: false,
+  //       background_color: "#b61924",
+  //       background_image: "",
+  //       background_position: "50% 50%",
+  //       background_repeat: "no-repeat",
+  //       background_size: "cover",
+  //     },
+  //   }
+  // );
   return (
     <>
+    
       <Store.Provider
         value={{
           selectedCard,
           setSelectedCard,
-          fileDataURL,
-          setFileDataURL,
+          // fileDataURL,
+          // setFileDataURL,
           cards,
           cardData,
           setCardData,
@@ -286,17 +410,27 @@ function App() {
           setFlexDirection,
           nameStatus,
           setNameStatus,
+          uploadedImage,
+          setUploadedImage,
+          printValue,
+          setPrintValue,
+          chooseCard,
+          setChooseCard
         }}
       >
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Form />} />
             <Route
+              path="alboms"
+              element={<Alboms card={cards[selectedCard]} />}
+            />
+            {/* <Route
               path="/card1"
               element={<Card1 card={cards[selectedCard]} />}
             />
             <Route path="/card2" element={<Card2 card={cards[1]} />}></Route>
-            <Route path="/card3" element={<Card3 card={cards[2]} />}></Route>
+            <Route path="/card3" element={<Card3 card={cards[2]} />}></Route> */}
           </Routes>
         </BrowserRouter>
       </Store.Provider>

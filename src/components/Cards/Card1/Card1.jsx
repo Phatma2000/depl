@@ -4,66 +4,44 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Card1.css";
 import Store from "../../context/store";
 import Logo from "../../Cards/Card1/logo1.svg";
+import { Grid } from "@mui/material";
 
 const VisitCard = ({ card, animateCard1 }) => {
   const {
     cardData,
-    selectedFile,
-    setSelectedFile,
-    fileDataURL,
-    setFileDataURL,
-    fontSize,
-    setFontSize,
-    name,
-    setName,
     flexDirection,
+    uploadedImage,
+    setFlexDirection,
   } = useContext(Store);
-  const [companyNameLines, setCompanyNameLines] = useState();
-  const [CardHolderName, setCardHolderName] = useState();
-  const [sloganText, setSloganText] = useState();
-  const [description, setDescription] = useState();
-  useEffect(() => {
-    const companyName =
-      cardData.companyName || card.firstCardContent.companyNameText;
-    const firstLine = companyName.slice(0, 30);
-    const secondLine = companyName.slice(50);
 
-    const name = cardData.name || card.secondCardContent.cardHolderNameText;
-    const firstLine1 = name.slice(0, 10);
-    const secondLine1 = name.slice(25);
+  const addressIconStyleList1 = [
+    { addressClass: "down-part-lorem1", iconClass: "fa-location1" },
+    { addressClass: "down-part-number", iconClass: "fa-envelope1" },
+    { addressClass: "down-part-email", iconClass: "fa-phone1" },
+    { addressClass: "down-part-website", iconClass: "fa-arrow-pointer1" },
+  ];
+  let index = 0;
+   if( cardData?.companyName?.length > 6){
+    setFlexDirection(true);
+   }
 
-    const companySlogan =
-      cardData.companySlogan || card.firstCardContent.companyNameSloganText;
-    const firstLine2 = companySlogan.slice(0, 35);
-    const secondLine2 = companySlogan.slice(40);
+   if(cardData?.firstName?.length > 12){
+    setFlexDirection(true)
+   }
 
-    const description =
-      cardData.description || card.firstCardContent.companyNameLoremContext;
-    const firstLine3 = description.slice(0, 20);
-    const secondLine3 = description.slice(40);
+   if(cardData?.lastName?.length>13){
+    setFlexDirection
 
-    setCompanyNameLines([firstLine, secondLine]);
-    setCardHolderName([firstLine1, secondLine1]);
-    setSloganText([firstLine2, secondLine2]);
-    setDescription([firstLine3, secondLine3]);
-  }, [
-    cardData.companyName,
-    card.firstCardContent.companyNameText,
-
-    cardData.name,
-    card.secondCardContent.cardHolderNameText,
-
-    cardData.companySlogan,
-    card.firstCardContent.companyNameSloganText,
-
-    cardData.description,
-    card.firstCardContent.companyNameLoremContext,
-  ]);
-
+   }
   return (
-    <div className="cards">
+    <Grid
+      className="cards"
+      columns={{ xs: 1, sm: 2 }}
+      container
+      justifyContent="center"
+    >
       {/* first card */}
-      <div className={card.firstCardContent.firstCardBlog}>
+      <Grid className={card.firstCardContent.firstCardBlog}>
         <img
           src={card.firstCardContent.backGroundImage}
           className={card.firstCardContent.firstCard}
@@ -73,127 +51,128 @@ const VisitCard = ({ card, animateCard1 }) => {
           style={{ flexDirection: flexDirection ? "column" : "row" }}
         >
           <div className={card.firstCardContent.LogoBox}>
-            <img
-              value={selectedFile}
+            {/* <img
+              value={setFieldValue}
               className={card.firstCardContent.cardLogo}
-              src={`${fileDataURL || Logo}`}
+              src={`${value || Logo}`}
               alt=""
-            />
+            /> */}
+            {/* Use the uploadedImage prop here */}
+
+            {uploadedImage ? (
+              <img
+                className={card.firstCardContent.cardLogo}
+                src={URL.createObjectURL(uploadedImage)}
+                alt=""
+              />
+            ) : (
+              <img
+                className={card.firstCardContent.cardLogo}
+                src={Logo}
+                alt=""
+              />
+            )}
           </div>
           <div>
             <div className={card.firstCardContent.companyName}>
-              <h2 style={{ fontSize: fontSize + "px" }}>
-                {companyNameLines?.map((line, index) => (
-                  <span key={index} className="company-name-line">
-                    {line}
-                  </span>
-                ))}
+              <h2>
+                {cardData.companyName
+                  ? cardData.companyName
+                  : card.firstCardContent.companyNameText}
+                {/* {cardData.companyName 
+                  ? // ? cardData.companyName : cardData.companyName?.length >6 ? flexDirection: "column" : "row" ? "" : card.firstCardContent.companyNameText}
+                    // {cardData.companyName
+                    cardData.companyName.length > 6
+                    // ? { flexDirection: "column" }
+                    // : { flexDirection: "row" }
+                  : card.firstCardContent.companyNameText} */}
               </h2>
               <p className={card.firstCardContent.companyNameSlogan}>
-                {" "}
-                {sloganText?.map((line, index) => (
-                  <span key={index} className="company-name-line">
-                    {line}
-                  </span>
-                ))}
+                {cardData.slogan
+                  ? cardData.slogan
+                  : cardData.slogan?.length == 0
+                  ? ""
+                  : card.firstCardContent.companyNameSloganText}
               </p>
             </div>
           </div>
         </div>
+        {/* </div> */}
         <div className={card.firstCardContent.companyNameLoremTextBox}>
           <p className={card.firstCardContent.companyNameLoremText}>
-            {description?.map((line, index) => (
-              <span key={index} className="company-name-line">
-                {line}
-              </span>
-            ))}
+            {cardData.description
+              ? cardData.description
+              : cardData.description?.length == 0
+              ? ""
+              : card.firstCardContent.companyNameLoremContext}
           </p>
         </div>
-      </div>
+      </Grid>
 
       {/* second card */}
-      <div className={card.secondCardContent.secondCardBlog}>
+      <Grid className={card.secondCardContent.secondCardBlog}>
         <img
           src={card.secondCardContent.backGroundImage}
           className={card.secondCardContent.secondCard}
           alt=""
         />
-        <div className={card.secondCardContent.informationBox}>
-          <div className={card.secondCardContent.iconGroup}>
-            {card.iconList.map((i, index) => {
-              return (
-                <div key={index}>
-                  <div className={i.className} style={{ padding: "4px" }}>
-                    {i.icon}
+        <div className="info-box1">
+          {card.addressText.map((v) => {
+            return (
+              v?.text != null && (
+                <div key={v.id}>
+                  <div key={v.id} className="icon-text1">
+                    <div className={addressIconStyleList1[index].iconClass}>
+                      {v?.icon}
+                    </div>
+                    <p
+                      style={card.contactList?.[0].customStyle || {}}
+                      className={addressIconStyleList1[index].addressClass}
+                    >
+                      {v?.text}
+                    </p>
                   </div>
+                  <p style={{ display: "none" }}> {++index}</p>
                 </div>
-              );
-            })}
-          </div>
-
-          <div className={card.secondCardContent.iconInformation}>
-            {
-              <>
-                <div key={card.contactList[0].id}>
-                  <p style={card.contactList[0].customStyle || {}}>
-                    {cardData.address
-                      ? cardData.address
-                      : card.contactList[0].text}
-                  </p>
-                </div>
-                <div key={card.contactList[1].id}>
-                  <p style={card.contactList[1].customStyle || {}}>
-                    {cardData?.phone
-                      ? cardData.phone
-                      : card?.contactList[1].text}
-                  </p>
-                </div>{" "}
-                <div key={card.contactList[0].id}>
-                  <p style={card.contactList[0].customStyle || {}}>
-                    {cardData?.email
-                      ? cardData.email
-                      : card.contactList[2].text}
-                  </p>
-                </div>{" "}
-                <div key={card.contactList[0].id}>
-                  <p style={card.contactList[0].customStyle || {}}>
-                    {cardData?.website
-                      ? cardData.website
-                      : card.contactList[3].text}
-                  </p>
-                </div>{" "}
-              </>
-            }
-          </div>
+              )
+            );
+          })}
         </div>
-
         <div
           className={card.secondCardContent.cardHolderNameBox}
-          style={{ flexDirection: flexDirection ? "column" : "row" }}
+          // style={{ flexDirection: flexDirection ? "column" : "row" }}
         >
           <p className={card.secondCardContent.cardHolderName}>
-            {CardHolderName?.map((line, index) => (
-              <span key={index} className="company-name-line">
-                {line}
-              </span>
-            ))}
+            {cardData.firstName
+              ? cardData.firstName
+              : card.secondCardContent.cardHolderNameText}
           </p>
-          <b>
-            {" "}
-            <span className={card.secondCardContent.cardHolderSurNameText}>
-              {cardData.surname
-                ? cardData.surname
-                : card.secondCardContent.cardHolderSurNameText}
-            </span>
-          </b>
+          {/* <p className={card.secondCardContent.cardMiddleClassName}>
+            {cardData.middleName
+              ? cardData.middleName
+              : cardData.middleName?.length == 0
+              ? ""
+              : card.secondCardContent.cardMiddleName}
+          </p> */}
+          <pre>
+            <b>
+              <span className={card.secondCardContent.cardHolderSurNameText}>
+                {cardData.lastName
+                  ? cardData.lastName
+                  : card.secondCardContent.cardHolderSurNameText}
+              </span>
+            </b>
+          </pre>
+        </div>
+        <div className="title-div1">
           <p className={card.secondCardContent.cardHolderOccupation}>
-            {cardData.position
-              ? cardData.position
+            {cardData.title
+              ? cardData.title
               : card.secondCardContent.cardHolderOccupationDescription}
           </p>
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

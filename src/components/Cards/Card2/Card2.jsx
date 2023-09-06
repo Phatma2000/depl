@@ -2,44 +2,77 @@ import React, { useContext } from "react";
 //assets
 import Logo from "../Card2/Logo.svg";
 //css
-import "./Card2.css"
+import "./Card2.css";
 import Store from "../../context/store";
+import { Grid } from "@mui/material";
 
 const Card2 = ({ card, cardData }) => {
-  const { fileDataURL, setFileDataURL } = useContext(Store);
+  const { fileDataURL, setFileDataURL, fontSize, setFontSize, uploadedImage } =
+    useContext(Store);
+
+  const addressIconStyleList = [
+    { addressClass: "down-part-lorem22", iconClass: "fa-location-dot2" },
+    { addressClass: "down-part-number2", iconClass: "fa-phone2" },
+    { addressClass: "down-part-email2", iconClass: "fa-envelope2" },
+    { addressClass: "down-part-website2", iconClass: "fa-arrow-pointer2" },
+  ];
+
+  let index = 0;
+
   return (
-    <div className="cards">
+    <Grid
+      className="cards"
+      columns={{ xs: 1, sm: 2 }}
+      container
+      justifyContent="center"
+    >
       {/* first card */}
-      <div
-        className={card.firstCardContent.firstCard}
+      <Grid
+        className={card.firstCardContent.firstCardBlog}
         style={{
           backgroundImage: `url(${card.firstCardContent.backGroundImage})`,
         }}
       >
         <div className="design-div">
-          <img className="logo-img" src={`${fileDataURL || Logo}`} />
-          <h3 className={card.firstCardContent.companyName}>
-            {cardData.companyName
-              ? cardData.companyName
-              : card.firstCardContent.companyNameText}
-          </h3>
-          <p className={card.firstCardContent.companyNameSlogan}>
-            {cardData.companySlogan
-              ? cardData.companySlogan
-              : card.firstCardContent.companyNameSloganText}
-          </p>
-          <p className={card.firstCardContent.companyNameLoremText}>
-            {cardData.description
-              ? cardData.description
-              : card.firstCardContent.companyNameLoremTextContent}
-          </p>
+          <div style={{ width: "50px" }}>
+            {uploadedImage ? (
+              <img
+                className="logo-img"
+                src={URL.createObjectURL(uploadedImage)}
+                alt=""
+              />
+            ) : (
+              <img className="logo-img" src={Logo} alt="" />
+            )}
+          </div>
+
+          <div className="webkit">
+            <h3 className={card.firstCardContent.companyName}>
+              {cardData.companyName
+                ? cardData.companyName
+                : card.firstCardContent.companyNameText}
+            </h3>
+            <p className={card.firstCardContent.companyNameSlogan}>
+              {cardData?.slogan
+                ? cardData?.slogan
+                : cardData.slogan?.length == 0
+                ? ""
+                : card.firstCardContent.companyNameSloganText}
+            </p>
+          </div>
         </div>
-        <p className="down-part-lorem"></p>
-      </div>
+        <p className={card.firstCardContent.companyNameLoremText}>
+          {cardData.description
+            ? cardData.description
+            : cardData.description?.length == 0
+            ? ""
+            : card.firstCardContent.companyNameLoremTextContent}
+        </p>
+      </Grid>
 
       {/* second card */}
-      <div
-        className={card.secondCardContent.secondCard}
+      <Grid
+        className={card.secondCardContent.secondCardBlog}
         style={{
           backgroundImage: `url(${card?.secondCardContent.backGroundImage})`,
         }}
@@ -47,50 +80,51 @@ const Card2 = ({ card, cardData }) => {
         <div className="company-info">
           <div className={card.secondCardContent.flexClassName}>
             <h2 className={card.secondCardContent.cardHolderName}>
-              {cardData.name
-                ? cardData.name
+              {cardData.firstName
+                ? cardData.firstName
                 : card.secondCardContent.cardHolderNameText}
             </h2>
+
+            {/* <p className={card.secondCardContent.cardMiddleClassName}>
+              {cardData.middleName
+                ? cardData.middleName
+                : cardData.middleName?.length == 0
+                ? ""
+                : card.secondCardContent.cardMiddleName}
+            </p> */}
             <span className={card.secondCardContent.cardHolderSurname}>
-              {cardData.surname
-                ? cardData.surname
+              {cardData.lastName
+                ? cardData.lastName
                 : card.secondCardContent.cardHolderSurnameText}
             </span>
           </div>
           <p className={card.secondCardContent.cardHolderOccupation}>
-            {cardData.position
-              ? cardData.position
+            {cardData.title
+              ? cardData.title
               : card.secondCardContent.cardHolderOccupationText}
           </p>
         </div>
-        <div className="address-div">
-          <div className="diviconlist">
-            {card.iconList.map((v) => {
-              return (
-                <>
-                  <div key={v.id} />
-                  <div className={`${v.className}`}>{v.icon}</div>
-                </>
-              );
-            })}
-          </div>
-          <div>
-            <p className={card.addressText[0].className}>
-              {cardData.address ? cardData.address : card?.addressText[0].text}
-            </p>
-            <p className={card.addressText[1].className}>
-              {cardData.phone ? cardData.phone : card.addressText[1].text}
-            </p>
-            <p className={card.addressText[2].className}>
-              {cardData?.email ? cardData.email : card?.addressText[2].text}
-            </p>
-            <p className={card.addressText[3].className}>
-              {cardData?.website ? cardData.website : card?.addressText[3].text}
-            </p>
-          </div>
+        <div className="info-box2">
+          {card.addressText.map((v) => {
+            return (
+              v.text != null && (
+                <div key={v.id}>
+                  <div key={v.id} className="icon-text2">
+                    <div className={addressIconStyleList[index].iconClass}>
+                      {v?.icon}
+                    </div>
+                    <p className={addressIconStyleList[index].addressClass}>
+                      {v?.text}
+                    </p>
+                  </div>
+                  <p style={{ display: "none" }}> {++index}</p>
+                </div>
+              )
+            );
+          })}
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 export default Card2;

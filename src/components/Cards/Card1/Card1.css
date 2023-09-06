@@ -5,16 +5,14 @@
   font-family: "Montserrat", sans-serif;
 }
 .cards {
+  align-content: space-between;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
   margin: auto;
   gap: 20px;
-  /* width: 40%; */
   height: auto;
-  padding-top: 20px;
-
+  margin-bottom: 0px !important;
 }
 .background {
   margin: auto;
@@ -26,9 +24,8 @@
   transform: translate(-3px, 143px);
   font-size: 12px;
 }
-/* .down-part-website{
-  font-weight: 800;
-} */
+
+
 .company-name-design {
   color: #e9e9e9;
   text-align: left;
@@ -36,7 +33,6 @@
   max-width: 300px;
   overflow: hidden;
 }
-
 /* .company-name-animate {
   animation: companyNameAnim 1s linear;
 } */
@@ -51,10 +47,11 @@
 } */
 .company-name-slogan {
   color: orange;
-  font-size: 7px;
+  font-size: 5px;
   letter-spacing: 4px;
   margin-top: 4px;
 }
+
 .icon-group {
   color: orange;
   font-size: 12px;
@@ -87,18 +84,18 @@
   width: 400px;
   height: 230px;
   margin: auto;
-  box-shadow: 1px 4px 9px;
   /* display: flex; */
   justify-content: space-around;
   align-items: flex-end;
   padding-bottom: 10px;
   /* border-radius: 15px; */
+  box-shadow: #0000005c 1px 8px 24px;
+
 }
 .information-box {
   display: flex;
   /* justify-content: space-between; */
   transform: translate(10px, -110px);
-
 }
 .company-name3 {
   display: flex;
@@ -107,7 +104,7 @@
   color: #e9e9e9;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .occupation {
@@ -121,8 +118,7 @@
   background-size: cover;
   width: 400px;
   height: 230px;
-  box-shadow: 1px 4px 9px;
-  /* border-radius: 15px; */
+  box-shadow: #0000005c 1px 8px 24px;
   margin: auto;
 }
 .first-card-design {
@@ -133,7 +129,6 @@
   height: 70px;
   align-items: center;
   transform: translate(0px, -208px);
-
 }
 .firstCardLogo {
   width: 50px;
@@ -141,56 +136,108 @@
 }
 .item-text {
   font-weight: 800;
-
 }
 .card-holder-name1 {
   display: inline-block;
-  margin-right: 8px;
-  
+  margin-right: 4px;
 }
 
-.span-text {
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-}
 .card-first-card-logo-box {
-  width: 140px;
+  width: 50px;
   text-align: center;
 }
+
 .card-first-card-logo {
-  width: 50px;
-  margin-right: 10px;
+  width: 100%;
 }
+
 .lorem {
-  font-size: 11px;
+  font-size: 7px;
   letter-spacing: 1px;
   font-weight: bold;
   display: flex;
   justify-content: flex-end;
   align-self: flex-end;
-  /* margin-top: 130px;
-  margin-right: 18px; */
   transform: translate(-20px, -102px);
 }
-.first-card-blog{
+.first-card-blog {
   height: 230px;
 }
-.second-card-blog{
+.second-card-blog {
   height: 230px;
+  position: relative;
 }
-.cardHolderNameBox{
-  transform: translate(110px, -152px);
-
+.cardHolderNameBox {
+    position: absolute;
+    left: 63%;
+    top: 76%;
+    display: flex;
+    font-size: 9px;
 }
 
-.company-name-line{
+.company-name-line {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   /* text-overflow: ellipsis; */
- 
 }
-.company-name-cc{
+.company-name-cc {
   flex-direction: column;
 }
+
+/* second card  */
+/* name-text */
+
+.span-text {
+  color: orange;
+  font-weight: 700;
+  font-size: 9px !important;
+  text-align: center;
+}
+/* icons */
+
+.fa-location1 {
+  color: orange;
+  margin-right: 9px;
+}
+.fa-phone1 {
+  color: orange;
+  margin-right: 9px;
+}
+.fa-envelope1 {
+  color: orange;
+  margin-right: 9px;
+}
+.fa-arrow-pointer1 {
+  color: orange;
+  margin-right: 9px;
+}
+
+h2 {
+  text-transform: capitalize;
+}
+
+.info-box1 {
+  position: absolute;
+  top: 65%;
+  left: 3%;
+  font-size: 8px;
+}
+
+.icon-text1 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.title-div1 {
+    position: absolute;
+    left: 63%;
+    top: 86%;
+}
+
+
+.middle-name1 {
+  margin-right: 4px;
+}
+
