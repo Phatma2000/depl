@@ -117,12 +117,6 @@ function Form(onImageClick2) {
     <Grid className="main-form-grid">
       <Grid spacing={2} container id="mainBox">
         <Grid item xs={11} md={6} id="leftBox">
-          <h2
-            className="left-header"
-            style={{ color: "#92CBCE", marginBottom: "10px" }}
-          >
-            Add your information
-          </h2>
           <Box
             onSubmit={formik.handleSubmit}
             component="form"
@@ -132,6 +126,12 @@ function Form(onImageClick2) {
             noValidate
             autoComplete="off"
           >
+            <h2
+              className="left-header"
+              style={{ color: "#92CBCE", marginBottom: "10px" }}
+            >
+              Add your information
+            </h2>
             {fields.map((field, i) => (
               <TextField
                 name={field.name}
