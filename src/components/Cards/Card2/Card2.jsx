@@ -7,7 +7,7 @@ import Store from "../../context/store";
 import { Grid } from "@mui/material";
 
 const Card2 = ({ card, cardData }) => {
-  const { fileDataURL, setFileDataURL, fontSize, setFontSize, uploadedImage } =
+  const { fileDataURL, setFileDataURL, fontSize, setFontSize, uploadedImage, setFlexDirection, flexDirection } =
     useContext(Store);
 
   const addressIconStyleList = [
@@ -18,6 +18,9 @@ const Card2 = ({ card, cardData }) => {
   ];
 
   let index = 0;
+ if (cardData?.firstName?.length > 6) {
+   setFlexDirection(true);
+ }
 
   return (
     <Grid
@@ -78,7 +81,7 @@ const Card2 = ({ card, cardData }) => {
         }}
       >
         <div className="company-info">
-          <div className={card.secondCardContent.flexClassName}>
+          <div className={card.secondCardContent.flexClassName}  style={{ flexDirection: flexDirection ? "column" : "row" }}>
             <h2 className={card.secondCardContent.cardHolderName}>
               {cardData.firstName
                 ? cardData.firstName
